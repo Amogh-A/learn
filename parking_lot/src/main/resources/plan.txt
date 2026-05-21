@@ -1,0 +1,166 @@
+Parking Lot
+
+Tables:
+
+PARKING_LOT_MASTER
+	- ID
+	- NAME
+	- ADDRESS
+	- LATITUDE
+	- LONGITUDE
+	- ACTIVE
+	- CREATED_DATE
+	- UPDATED_DATE
+
+PARKING_FLOOR_MASTER
+	- ID
+	- PARKING_LOT_MASTER_ID
+	- FLOOR_NUMBER
+	- ACTIVE
+	- CREATED_DATE
+	- UPDATED_DATE
+
+VEHICLE_TYPE_MASTER
+	- ID
+	- TYPE (Bike, Car, Truck)
+	- CREATED_DATE
+	- UPDATED_DATE
+
+VEHICLE_TYPE_PARKING_SPACE_MAPPER
+	- ID
+	- VEHICLE_TYPE_ID
+	- PARKING_SPACE_META_ID
+	- CREATED_DATE
+	- UPDATED_DATE
+
+PARKING_SPACE_META
+	- ID
+	- SPACE_SIZE (SMALL, MEDIUM, LARAGE, EL)
+	- CREATED_DATE
+	- UPDATED_DATE
+
+GATE_MASTER
+	- ID
+	- PARKING_LOT_MASTER_ID
+	- TYPE (ENTRY, EXIT, HYBRID)
+	- ACTIVE
+	- CREATED_DATE
+	- UPDATED_DATE
+
+
+PARKING_SPACE_MASTER
+	- ID
+	- IDENTIFIER (To identify the space in parking lot)
+	- PARKING_LOT_MASTER_ID
+	- PARKING_SPACE_META_ID
+	- PARKING_FLOOR_MASTER_ID
+	- OCCUPANCY_STATUS (OCCUPIED, RESERVED, AVAILABLE) Enum
+	- CREATED_DATE
+	- UPDATED_DATE
+
+TICKET_MASTER_STATUS
+	- ID
+	- STATUS (ACTIVE, PAID, CANCELLED)
+	- ACTIVE
+	- CREATED_DATE
+	- UPDATED_DATE
+
+TICKET_MASTER
+	- ID
+	- PARKING_LOT_MASTER_ID
+	- ENTRY_GATE_ID
+	- EXIT_GATE_ID
+	- VEHICLE_TYPE_MASTER_ID
+	- PARKING_SPACE_MASTER_ID
+	- VEHICLE_NUMBER
+	- ENTRY_TIME
+	- EXIT_TIME
+	- STATUS
+	- CREATED_DATE
+	- UPDATED_DATE
+
+PAYMENT_MASTER
+	- ID
+	- TICKET_ID
+	- DATE
+	- AMOUNT
+	- PAYMENT_MODE
+	- PAYMENT_STATUS (ENUM)
+	- TRANSACTION_REFERENCE
+	- CREATED_DATE
+	- UPDATED_DATE
+
+
+Api's:
+/parking/getNearestLots
+Request:
+{
+	vehicleType:
+	latitude:
+	longitude:
+}
+Response:
+[
+	{
+		parkingLotName:
+		address:
+		distanceToGo:
+		availableSpots:
+	}
+]
+
+/parking/availableSpots/{parkingLotId} (To display at the gate)
+Response:
+[
+	{
+		parkingSpaceSize:
+		availableCount:
+	}
+]
+
+/parking/enter
+Request:
+{
+	parkingLotId:
+	vehicleType:
+	vehicleNumber:
+	gateId:
+}
+Response:
+{
+	ticketId:
+	parkingSpaceId:
+	parkingSpaceIdentifier:
+	floorNumber:
+	entryTime:
+}
+
+/parking/exit/{ticketId}
+Response:
+{
+	duration:
+	amount:
+}
+
+/parking/pay/{ticketId} (This is after the payment)
+Request:
+{
+	amount:
+	paymentMode:
+	paymentReference:
+}
+
+
+
+
+
+
+
+
+
+
+touch \
+GateType.java \
+OccupancyStatus.java \
+PaymentMode.java \
+PaymentStatus.java
