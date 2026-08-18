@@ -28,5 +28,13 @@ public class App
 
         System.out.println(builder.toString());
 
+        //3) Simple Factory:
+
+        SimpleFactory simpleFactory = new SimpleFactory();
+        Sort sort = simpleFactory.getSort("bubble");
+        sort.sort();
+        sort = simpleFactory.getSort("heap");
+        sort.sort();
+
     }
 }
