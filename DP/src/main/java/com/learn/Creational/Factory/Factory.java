@@ -1,5 +1,9 @@
 package com.learn.Creational.Factory;
 
-public interface Factory {
-    MessageInterface getMessageInterfact();
+public abstract class Factory {
+    abstract MessageInterface getMessageInterfact();
+    public void notifyUser(){
+        MessageInterface messageInterface = getMessageInterfact();
+        messageInterface.sendMessage();
+    }
 }
